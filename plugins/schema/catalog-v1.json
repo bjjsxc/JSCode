@@ -1,0 +1,232 @@
+{
+  "$defs": {
+    "CatalogPlugin": {
+      "additionalProperties": false,
+      "properties": {
+        "plugin_id": {
+          "pattern": "^[a-z0-9](?:[a-z0-9.-]{0,62}[a-z0-9])?$",
+          "title": "Plugin Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "summary": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string"
+        },
+        "publisher": {
+          "$ref": "#/$defs/PluginPublisher"
+        },
+        "latest_version": {
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-([0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*))?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$",
+          "title": "Latest Version",
+          "type": "string"
+        },
+        "latest_versions": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "maxProperties": 5,
+          "propertyNames": {
+            "enum": [
+              "windows-x64",
+              "windows-arm64",
+              "linux-x64",
+              "macos-x64",
+              "macos-arm64"
+            ]
+          },
+          "title": "Latest Versions",
+          "type": "object"
+        },
+        "versions": {
+          "items": {
+            "$ref": "#/$defs/CatalogVersion"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Versions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "plugin_id",
+        "name",
+        "summary",
+        "publisher",
+        "latest_version",
+        "versions"
+      ],
+      "title": "CatalogPlugin",
+      "type": "object"
+    },
+    "CatalogVersion": {
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-([0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*))?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$",
+          "title": "Version",
+          "type": "string"
+        },
+        "min_host_version": {
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-([0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*))?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$",
+          "title": "Min Host Version",
+          "type": "string"
+        },
+        "platform": {
+          "enum": [
+            "windows-x64",
+            "windows-arm64",
+            "linux-x64",
+            "macos-x64",
+            "macos-arm64"
+          ],
+          "title": "Platform",
+          "type": "string"
+        },
+        "manifest_url": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Manifest Url",
+          "type": "string"
+        },
+        "manifest_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Manifest Sha256",
+          "type": "string"
+        },
+        "package_url": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Package Url",
+          "type": "string"
+        },
+        "size": {
+          "exclusiveMinimum": 0,
+          "maximum": 209715200,
+          "title": "Size",
+          "type": "integer"
+        },
+        "sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "capabilities": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Capabilities",
+          "type": "array"
+        },
+        "permissions": {
+          "items": {
+            "$ref": "#/$defs/ConnectorActionClass"
+          },
+          "maxItems": 4,
+          "minItems": 1,
+          "title": "Permissions",
+          "type": "array"
+        },
+        "release_notes_url": {
+          "anyOf": [
+            {
+              "maxLength": 2000,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Release Notes Url"
+        }
+      },
+      "required": [
+        "version",
+        "min_host_version",
+        "platform",
+        "manifest_url",
+        "manifest_sha256",
+        "package_url",
+        "size",
+        "sha256",
+        "capabilities",
+        "permissions"
+      ],
+      "title": "CatalogVersion",
+      "type": "object"
+    },
+    "ConnectorActionClass": {
+      "enum": [
+        "read",
+        "write",
+        "external_send",
+        "high_risk"
+      ],
+      "title": "ConnectorActionClass",
+      "type": "string"
+    },
+    "PluginPublisher": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z0-9](?:[a-z0-9.-]{0,62}[a-z0-9])?$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "title": "PluginPublisher",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "catalog-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "revision": {
+      "minimum": 1,
+      "title": "Revision",
+      "type": "integer"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "title": "Generated At",
+      "type": "string"
+    },
+    "plugins": {
+      "items": {
+        "$ref": "#/$defs/CatalogPlugin"
+      },
+      "maxItems": 500,
+      "title": "Plugins",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "revision",
+    "generated_at"
+  ],
+  "title": "PluginCatalog",
+  "type": "object"
+}

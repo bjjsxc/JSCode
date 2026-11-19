@@ -1,0 +1,42 @@
+{
+  "additionalProperties": false,
+  "description": "跨语言稳定的签名信封；签名覆盖 payload 解码后的原始字节。",
+  "properties": {
+    "schema_version": {
+      "const": "signed-envelope-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "key_id": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+      "title": "Key Id",
+      "type": "string"
+    },
+    "algorithm": {
+      "const": "ed25519",
+      "title": "Algorithm",
+      "type": "string"
+    },
+    "payload": {
+      "maxLength": 4194304,
+      "minLength": 4,
+      "title": "Payload",
+      "type": "string"
+    },
+    "signature": {
+      "maxLength": 512,
+      "minLength": 4,
+      "title": "Signature",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "key_id",
+    "algorithm",
+    "payload",
+    "signature"
+  ],
+  "title": "SignedEnvelope",
+  "type": "object"
+}

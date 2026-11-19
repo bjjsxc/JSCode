@@ -1,0 +1,12 @@
+{
+  "schema_version": "plugin-v2",
+  "id": "jscode.distribution-check",
+  "name": "插件分发测试",
+  "summary": "验证测试插件的安装、启用与版本更新。",
+  "version": "1.0.0",
+  "publisher": "久胜科技",
+  "distribution": "independent",
+  "platforms": ["windows-x64", "windows-arm64", "linux-x64", "macos-x64", "macos-arm64"],
+  "interaction_mode": "structured",
+  "skills": ["skills/distribution-check/SKILL.md"]
+}

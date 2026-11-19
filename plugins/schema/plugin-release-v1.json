@@ -1,0 +1,1072 @@
+{
+  "$defs": {
+    "LightweightConversationProfileManagementManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "maxLength": 500,
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "title": "LightweightConversationProfileManagementManifest",
+      "type": "object"
+    },
+    "LightweightConversationProfileManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_]{0,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "maxLength": 500,
+          "title": "Description",
+          "type": "string"
+        },
+        "host_adapter": {
+          "pattern": "^[a-z][a-z0-9_]{0,63}$",
+          "title": "Host Adapter",
+          "type": "string"
+        },
+        "management": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LightweightConversationProfileManagementManifest"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "host_adapter"
+      ],
+      "title": "LightweightConversationProfileManifest",
+      "type": "object"
+    },
+    "LightweightMacOSAppManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "maxLength": 240,
+          "minLength": 5,
+          "title": "Path",
+          "type": "string"
+        },
+        "bundle_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9.-]{1,253}[A-Za-z0-9]$",
+          "title": "Bundle Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "bundle_id"
+      ],
+      "title": "LightweightMacOSAppManifest",
+      "type": "object"
+    },
+    "LightweightMcpManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "protocol": {
+          "const": "2026-07-28",
+          "title": "Protocol",
+          "type": "string"
+        },
+        "transport": {
+          "const": "stdio",
+          "title": "Transport",
+          "type": "string"
+        },
+        "entrypoint": {
+          "maxLength": 240,
+          "minLength": 1,
+          "title": "Entrypoint",
+          "type": "string"
+        },
+        "tools": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Tools",
+          "type": "array"
+        },
+        "startup_policy": {
+          "default": "eager",
+          "enum": [
+            "eager",
+            "on_demand"
+          ],
+          "title": "Startup Policy",
+          "type": "string"
+        },
+        "tool_catalog": {
+          "anyOf": [
+            {
+              "maxLength": 240,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tool Catalog"
+        },
+        "timeout_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0.1,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Timeout Seconds"
+        },
+        "startup_timeout_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0.1,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Startup Timeout Seconds"
+        },
+        "tool_timeout_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0.1,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tool Timeout Seconds"
+        },
+        "request_context": {
+          "items": {
+            "const": "conversation",
+            "type": "string"
+          },
+          "maxItems": 1,
+          "title": "Request Context",
+          "type": "array"
+        }
+      },
+      "required": [
+        "protocol",
+        "transport",
+        "entrypoint",
+        "tools"
+      ],
+      "title": "LightweightMcpManifest",
+      "type": "object"
+    },
+    "LightweightPluginManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "enum": [
+            "plugin-v1",
+            "plugin-v2"
+          ],
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z0-9](?:[a-z0-9.-]{0,62}[a-z0-9])?$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-([0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*))?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$",
+          "title": "Version",
+          "type": "string"
+        },
+        "summary": {
+          "maxLength": 240,
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string"
+        },
+        "publisher": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Publisher",
+          "type": "string"
+        },
+        "distribution": {
+          "default": "bundled",
+          "enum": [
+            "bundled",
+            "independent"
+          ],
+          "title": "Distribution",
+          "type": "string"
+        },
+        "platforms": {
+          "items": {
+            "enum": [
+              "windows-x64",
+              "windows-arm64",
+              "linux-x64",
+              "macos-x64",
+              "macos-arm64"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Platforms",
+          "type": "array"
+        },
+        "interaction_mode": {
+          "enum": [
+            "pure_visual",
+            "structured"
+          ],
+          "title": "Interaction Mode",
+          "type": "string"
+        },
+        "mcp": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LightweightMcpManifest"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "skills": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Skills",
+          "type": "array"
+        },
+        "configuration": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PluginConfigurationManifest"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "ui": {
+          "items": {
+            "$ref": "#/$defs/LightweightUiManifest"
+          },
+          "maxItems": 20,
+          "title": "Ui",
+          "type": "array"
+        },
+        "conversation_profiles": {
+          "items": {
+            "$ref": "#/$defs/LightweightConversationProfileManifest"
+          },
+          "maxItems": 20,
+          "title": "Conversation Profiles",
+          "type": "array"
+        },
+        "entry": {
+          "anyOf": [
+            {
+              "maxLength": 240,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Entry"
+        },
+        "capabilities": {
+          "items": {
+            "enum": [
+              "agents",
+              "tools",
+              "events"
+            ],
+            "type": "string"
+          },
+          "maxItems": 4,
+          "title": "Capabilities",
+          "type": "array"
+        },
+        "setup": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LightweightSetupManifest"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "source_control": {
+          "anyOf": [
+            {
+              "enum": [
+                "github",
+                "gitlab"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Control"
+        },
+        "source_control_tools": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceControlToolsManifest"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "source_control_repositories": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRepositoryProviderManifest"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "macos_apps": {
+          "items": {
+            "$ref": "#/$defs/LightweightMacOSAppManifest"
+          },
+          "maxItems": 8,
+          "title": "Macos Apps",
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "id",
+        "name",
+        "version",
+        "summary",
+        "publisher",
+        "platforms",
+        "interaction_mode"
+      ],
+      "title": "LightweightPluginManifest",
+      "type": "object"
+    },
+    "LightweightSetupManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "chrome-extension",
+          "title": "Kind",
+          "type": "string"
+        },
+        "url": {
+          "maxLength": 500,
+          "pattern": "^https://",
+          "title": "Url",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "url",
+        "label"
+      ],
+      "title": "LightweightSetupManifest",
+      "type": "object"
+    },
+    "LightweightUiManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z0-9](?:[a-z0-9.-]{0,62}[a-z0-9])?$",
+          "title": "Id",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "maxLength": 500,
+          "title": "Description",
+          "type": "string"
+        },
+        "entrypoint": {
+          "maxLength": 240,
+          "minLength": 1,
+          "title": "Entrypoint",
+          "type": "string"
+        },
+        "custom_element": {
+          "maxLength": 100,
+          "minLength": 3,
+          "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$",
+          "title": "Custom Element",
+          "type": "string"
+        },
+        "slot": {
+          "default": "workspace",
+          "enum": [
+            "workspace",
+            "configuration"
+          ],
+          "title": "Slot",
+          "type": "string"
+        },
+        "context": {
+          "default": "project",
+          "enum": [
+            "global",
+            "project",
+            "thread"
+          ],
+          "title": "Context",
+          "type": "string"
+        },
+        "composer_export": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Za-z_$][A-Za-z0-9_$]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Composer Export"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "entrypoint",
+        "custom_element"
+      ],
+      "title": "LightweightUiManifest",
+      "type": "object"
+    },
+    "PluginAccountOperationManifest": {
+      "additionalProperties": false,
+      "description": "A signed route on the host-bound account service, never a caller URL.",
+      "properties": {
+        "method": {
+          "enum": [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "method",
+        "path"
+      ],
+      "title": "PluginAccountOperationManifest",
+      "type": "object"
+    },
+    "PluginBackgroundManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "title": "Action",
+          "type": "string"
+        },
+        "interval_seconds": {
+          "exclusiveMinimum": 0,
+          "title": "Interval Seconds",
+          "type": "number"
+        },
+        "delay_field": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Delay Field"
+        }
+      },
+      "required": [
+        "action",
+        "interval_seconds"
+      ],
+      "title": "PluginBackgroundManifest",
+      "type": "object"
+    },
+    "PluginConfigurationActionManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "access": {
+          "default": "read",
+          "enum": [
+            "read",
+            "write",
+            "local",
+            "internal",
+            "account"
+          ],
+          "title": "Access",
+          "type": "string"
+        },
+        "account_operations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Account Operations",
+          "type": "array"
+        },
+        "device_operations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Device Operations",
+          "type": "array"
+        }
+      },
+      "title": "PluginConfigurationActionManifest",
+      "type": "object"
+    },
+    "PluginConfigurationLifecycleManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "start_action": {
+          "title": "Start Action",
+          "type": "string"
+        },
+        "status_action": {
+          "title": "Status Action",
+          "type": "string"
+        },
+        "cancel_operation": {
+          "title": "Cancel Operation",
+          "type": "string"
+        },
+        "handle_field": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "title": "Handle Field",
+          "type": "string"
+        },
+        "terminal_statuses": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Terminal Statuses",
+          "type": "array"
+        }
+      },
+      "required": [
+        "start_action",
+        "status_action",
+        "cancel_operation",
+        "handle_field",
+        "terminal_statuses"
+      ],
+      "title": "PluginConfigurationLifecycleManifest",
+      "type": "object"
+    },
+    "PluginConfigurationManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "entrypoint": {
+          "title": "Entrypoint",
+          "type": "string"
+        },
+        "actions": {
+          "additionalProperties": {
+            "$ref": "#/$defs/PluginConfigurationActionManifest"
+          },
+          "title": "Actions",
+          "type": "object"
+        },
+        "services": {
+          "items": {
+            "enum": [
+              "http",
+              "cli",
+              "account",
+              "device"
+            ],
+            "type": "string"
+          },
+          "title": "Services",
+          "type": "array"
+        },
+        "account_operations": {
+          "additionalProperties": {
+            "$ref": "#/$defs/PluginAccountOperationManifest"
+          },
+          "title": "Account Operations",
+          "type": "object"
+        },
+        "device_operations": {
+          "additionalProperties": {
+            "$ref": "#/$defs/PluginAccountOperationManifest"
+          },
+          "title": "Device Operations",
+          "type": "object"
+        },
+        "background": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PluginBackgroundManifest"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "serialize_writes": {
+          "default": false,
+          "title": "Serialize Writes",
+          "type": "boolean"
+        },
+        "executables": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Executables",
+          "type": "object"
+        },
+        "timeout_seconds": {
+          "default": 30,
+          "exclusiveMinimum": 0,
+          "title": "Timeout Seconds",
+          "type": "number"
+        },
+        "lifecycle": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PluginConfigurationLifecycleManifest"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "entrypoint",
+        "actions"
+      ],
+      "title": "PluginConfigurationManifest",
+      "type": "object"
+    },
+    "PluginReleasePackage": {
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Url",
+          "type": "string"
+        },
+        "size": {
+          "exclusiveMinimum": 0,
+          "maximum": 209715200,
+          "title": "Size",
+          "type": "integer"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url",
+        "size",
+        "sha256"
+      ],
+      "title": "PluginReleasePackage",
+      "type": "object"
+    },
+    "PluginReleasePublisher": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z0-9](?:[a-z0-9.-]{0,62}[a-z0-9])?$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "title": "PluginReleasePublisher",
+      "type": "object"
+    },
+    "SourceControlToolsManifest": {
+      "additionalProperties": false,
+      "description": "Versioned plugin data; authentication and transport remain host services.",
+      "properties": {
+        "discovery": {
+          "default": "listed",
+          "enum": [
+            "listed",
+            "all"
+          ],
+          "title": "Discovery",
+          "type": "string"
+        },
+        "read": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Read",
+          "type": "array"
+        },
+        "write": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Write",
+          "type": "array"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Labels",
+          "type": "object"
+        },
+        "upstream_url": {
+          "minLength": 1,
+          "title": "Upstream Url",
+          "type": "string"
+        },
+        "upstream_version": {
+          "minLength": 1,
+          "title": "Upstream Version",
+          "type": "string"
+        },
+        "license": {
+          "minLength": 1,
+          "title": "License",
+          "type": "string"
+        },
+        "experimental": {
+          "default": false,
+          "title": "Experimental",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "upstream_url",
+        "upstream_version",
+        "license"
+      ],
+      "title": "SourceControlToolsManifest",
+      "type": "object"
+    },
+    "SourceRepositoryCatalogManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "parameters": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Parameters",
+          "type": "object"
+        },
+        "page_parameter": {
+          "default": "page",
+          "title": "Page Parameter",
+          "type": "string"
+        },
+        "size_parameter": {
+          "default": "per_page",
+          "title": "Size Parameter",
+          "type": "string"
+        },
+        "page_size": {
+          "exclusiveMinimum": 0,
+          "title": "Page Size",
+          "type": "integer"
+        },
+        "search": {
+          "enum": [
+            "server",
+            "catalog"
+          ],
+          "title": "Search",
+          "type": "string"
+        },
+        "search_parameter": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Search Parameter"
+        }
+      },
+      "required": [
+        "path",
+        "page_size",
+        "search"
+      ],
+      "title": "SourceRepositoryCatalogManifest",
+      "type": "object"
+    },
+    "SourceRepositoryFieldsManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "clone_url": {
+          "title": "Clone Url",
+          "type": "string"
+        },
+        "web_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Web Url"
+        },
+        "default_branch": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Default Branch"
+        },
+        "visibility_field": {
+          "title": "Visibility Field",
+          "type": "string"
+        },
+        "public_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "boolean"
+            }
+          ],
+          "title": "Public Value"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "path",
+        "clone_url",
+        "visibility_field",
+        "public_value"
+      ],
+      "title": "SourceRepositoryFieldsManifest",
+      "type": "object"
+    },
+    "SourceRepositoryProviderManifest": {
+      "additionalProperties": false,
+      "description": "Platform behavior belongs to the signed plugin; the host interprets v1.",
+      "properties": {
+        "protocol": {
+          "const": "repository-provider-v1",
+          "title": "Protocol",
+          "type": "string"
+        },
+        "api_base": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Api Base"
+        },
+        "catalog": {
+          "$ref": "#/$defs/SourceRepositoryCatalogManifest"
+        },
+        "detail_path": {
+          "title": "Detail Path",
+          "type": "string"
+        },
+        "fields": {
+          "$ref": "#/$defs/SourceRepositoryFieldsManifest"
+        },
+        "clone_username": {
+          "pattern": "^[A-Za-z0-9_-]+$",
+          "title": "Clone Username",
+          "type": "string"
+        }
+      },
+      "required": [
+        "protocol",
+        "catalog",
+        "detail_path",
+        "fields",
+        "clone_username"
+      ],
+      "title": "SourceRepositoryProviderManifest",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "plugin-release-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "plugin": {
+      "$ref": "#/$defs/LightweightPluginManifest"
+    },
+    "publisher": {
+      "$ref": "#/$defs/PluginReleasePublisher"
+    },
+    "min_host_version": {
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-([0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*))?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$",
+      "title": "Min Host Version",
+      "type": "string"
+    },
+    "platform": {
+      "enum": [
+        "windows-x64",
+        "windows-arm64",
+        "linux-x64",
+        "macos-x64",
+        "macos-arm64"
+      ],
+      "title": "Platform",
+      "type": "string"
+    },
+    "package": {
+      "$ref": "#/$defs/PluginReleasePackage"
+    }
+  },
+  "required": [
+    "schema_version",
+    "plugin",
+    "publisher",
+    "min_host_version",
+    "platform",
+    "package"
+  ],
+  "title": "LightweightPluginRelease",
+  "type": "object"
+}
