@@ -1,0 +1,3 @@
+# 签名目录按原始字节核对清单摘要。
+/extensions/** -text
+/market/**/*.zip -text
