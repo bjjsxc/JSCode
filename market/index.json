@@ -1,0 +1,62 @@
+[
+  {
+    "id": "03a3df6d-c0f6-491a-83ba-517001f37dbd",
+    "name": "anti-defensive-writing",
+    "title": "反防御性写作",
+    "description": "起草或修改论文、摘要、引言、贡献说明、讨论、结论、技术说明、项目申请、产品文案、政策文本和专业报告时，删去不必要的免责声明、层层保留、道歉式铺垫、自我贬低和过度解释，使表达更清晰、直接、简洁，同时保留证据范围、真实不确定性以及必要的方法、伦理、法律和安全限定。用户要求文字更有力、更自信、少些啰嗦或减少防御性表达时使用。",
+    "summary": "写论文、技术说明和专业文案时，去掉反复自我辩护、道歉式开场、重复免责声明和层层保留，让观点更直接、结构更清楚。保留真实局限、证据范围和必要的不确定性，并用具体指标说明取舍。适用于中文与英文稿件，无需运行依赖。依据 Kiterlin/anti-defensive-writing 的完整中文规则整理，保留原作者署名与 MIT 许可。",
+    "category": "办公",
+    "tags": [
+      "中文",
+      "写作润色",
+      "学术写作",
+      "技术写作",
+      "文案",
+      "去冗余"
+    ],
+    "author": "Kiterlin",
+    "version": "1.0.0",
+    "kind": "skill",
+    "updatedAt": "2026-10-13T10:27:01.525424+00:00",
+    "bytes": 7014,
+    "source": "https://github.com/Kiterlin/anti-defensive-writing"
+  },
+  {
+    "id": "8dee64f0-d812-4d48-8d08-7e41a658cd0b",
+    "name": "grill-me",
+    "title": "拷问我",
+    "description": "通过一轮轮深入提问，梳理计划、设计或想法中的关键决策与依赖，在达成共识前暂停执行。适用于需求澄清和方案推敲。",
+    "summary": "通过一轮轮深入提问，梳理计划、设计或想法中的关键决策与依赖，在达成共识前暂停执行。适用于需求澄清和方案推敲。",
+    "category": "办公",
+    "tags": [
+      "需求澄清",
+      "方案推敲",
+      "Matt Pocock"
+    ],
+    "author": "Matt Pocock",
+    "version": "1.0.1",
+    "kind": "skill",
+    "updatedAt": "2026-09-15T07:18:28.279411+00:00",
+    "bytes": 3335,
+    "source": "https://github.com/mattpocock/skills"
+  },
+  {
+    "id": "0f3125e1-ccba-47a0-b1c2-29f13d28d465",
+    "name": "expert-expert-1791507258903",
+    "title": "久胜助理",
+    "description": "代码场景，正确引导做正确的事",
+    "summary": "代码场景，正确引导做正确的事",
+    "category": "开发",
+    "tags": [
+      "开发"
+    ],
+    "author": "肖志伟",
+    "version": "1.0.0",
+    "kind": "expert",
+    "updatedAt": "2026-10-09T01:03:57.474190+00:00",
+    "bytes": 2189,
+    "avatar": "ai-native-executor",
+    "avatar_hue": 333,
+    "template": false
+  }
+]
