@@ -1,0 +1,57 @@
+{
+  "id": "05c62184-6be9-4cd7-a6dd-b16e2d37c2e3",
+  "name": "browser-automation",
+  "title": "浏览器自动化",
+  "description": "使用语义化定位器和 UI 状态构建可靠的浏览器自动化检查。强调复用已认证浏览器会话，避免脆弱选择器，显式验证操作结果。",
+  "summary": "赋予 Agent 控制浏览器完成自动化任务的能力。Agent 使用语义化定位器（按钮文字、表单标签）替代脆弱的 CSS 选择器，支持保存和复用登录状态避免重复认证。解决选择器容易失效、每次都要重复登录的痛点。源自社区 6700+ 安装量。",
+  "category": "开发",
+  "tags": [
+    "浏览器自动化",
+    "Playwright",
+    "语义化定位器",
+    "UI测试",
+    "认证复用"
+  ],
+  "author": "VibeShip，Agentic Awesome Skills 维护者改编",
+  "version": "2.0.1",
+  "kind": "skill",
+  "updatedAt": "2026-09-21T09:47:49.003704+00:00",
+  "bytes": 9150,
+  "instructions": "---\nname: browser-automation\ndescription: 使用语义化定位器和 UI 状态构建可靠的浏览器自动化检查。强调复用已认证浏览器会话，避免脆弱选择器，显式验证操作结果。\n---\n\n# 浏览器自动化\n\n使用语义化定位器和 UI 状态构建可靠的浏览器自动化检查，适用于 Web 应用测试、数据采集和流程自动化。\n\n## 触发场景\n\n- 需要自动化浏览器操作（填表、点击、导航）\n- 需要验证 Web 应用的 UI 状态和功能\n- 需要跨页面执行多步骤工作流\n- 需要从 Web 页面提取结构化数据\n- 需要定期执行 Web 检查任务\n\n## 核心原则\n\n### 1. 复用已认证浏览器\n\n- 优先使用已有的、已登录的浏览器会话\n- 不要每次测试都创建全新的浏览器实例\n- 保存和复用浏览器状态（Cookie、LocalStorage）\n- 减少重复登录带来的开销和不稳定性\n\n### 2. 语义化定位器优先\n\n避免使用脆弱的 CSS/XPath 选择器：\n\n```\n❌ 避免：page.locator('div > div:nth-child(3) > button.btn-primary')\n❌ 避免：page.locator('//*[@id=\"form\"]/div[2]/input')\n\n✅ 推荐：page.get_by_role('button', name='提交')\n✅ 推荐：page.get_by_label('邮箱地址')\n✅ 推荐：page.get_by_text('欢迎回来')\n✅ 推荐：page.get_by_placeholder('请输入密码')\n```\n\n### 3. 显式验证结果\n\n每个操作后都要验证预期结果：\n\n```python\n# 点击后验证页面跳转\npage.click(\"button:has-text('登录')\")\npage.wait_for_url(\"**/dashboard\")\nexpect(page.get_by_text(\"欢迎\")).to_be_visible()\n\n# 填表后验证成功消息\npage.fill(\"input[name='email']\", \"test@example.com\")\npage.click(\"button:has-text('提交')\")\nexpect(page.get_by_text(\"提交成功\")).to_be_visible()\n```\n\n### 4. 分离受控测试与外部交互\n\n- 应用内部测试：完全控制测试环境\n- 外部网站交互：考虑网络波动、页面变化等因素\n- 为外部交互添加更长的超时和重试机制\n\n## 可靠自动化模式\n\n### 等待策略\n\n```python\n# 等待元素出现\npage.wait_for_selector(\"button:has-text('保存')\", state=\"visible\")\n\n# 等待元素消失\npage.wait_for_selector(\".loading-spinner\", state=\"hidden\")\n\n# 等待网络空闲\npage.wait_for_load_state(\"networkidle\")\n\n# 等待特定响应\npage.wait_for_response(\"**/api/submit\")\n```\n\n### 重试机制\n\n```python\nfrom playwright.sync_api import expect\n\n# 自动重试直到条件满足（默认 5 秒超时）\nexpect(page.get_by_text(\"加载完成\")).to_be_visible(timeout=10000)\n```\n\n### 页面导航\n\n```python\n# 等待导航完成\npage.goto(\"https://example.com\", wait_until=\"domcontentloaded\")\n\n# 等待特定条件后再继续\npage.goto(\"https://example.com\")\npage.wait_for_load_state(\"networkidle\")\n```\n\n## 安全检查清单\n\n执行浏览器自动化前确认：\n\n- [ ] 使用正确的浏览器配置文件（避免污染个人会话）\n- [ ] 已处理登录和认证状态\n- [ ] 选择器使用语义化定位器\n- [ ] 每个操作后有显式验证\n- [ ] 设置了合理的超时时间\n- [ ] 测试数据不会污染生产环境\n- [ ] 自动化脚本有错误处理和日志记录\n\n## 常见问题排查\n\n| 问题 | 原因 | 解决方案 |\n|------|------|----------|\n| 元素找不到 | 页面未加载完成 | 添加 `wait_for_load_state` |\n| 选择器失效 | UI 结构变化 | 改用语义化定位器 |\n| 测试偶尔失败 | 时序问题 | 使用显式等待替代 `sleep` |\n| 登录状态丢失 | Cookie 过期 | 复用浏览器上下文或重新登录 |\n| 弹窗阻塞 | 未处理的对话框 | 使用 `handle_dialog` 处理 |\n",
+  "files": [
+    {
+      "path": "browser-automation/SKILL.md",
+      "bytes": 3574
+    },
+    {
+      "path": "browser-automation/examples/authenticated_session.py",
+      "bytes": 1836
+    },
+    {
+      "path": "browser-automation/scripts/browser_helper.py",
+      "bytes": 2812
+    },
+    {
+      "path": "browser-automation/UPSTREAM-NOTICE.txt",
+      "bytes": 347
+    },
+    {
+      "path": "browser-automation/UPSTREAM-LICENSE.txt",
+      "bytes": 11285
+    }
+  ],
+  "sha256": "8bb8042b751ee8a3c53f8fa482c399a14e8dc1dbb4be88bc32e3bbe34ef4d376",
+  "changelog": "去除名称中的“（完整版）”后缀",
+  "compatibility": "",
+  "versions": [
+    {
+      "version": "2.0.1",
+      "changelog": "去除名称中的“（完整版）”后缀",
+      "published_at": "2026-09-21T09:47:49.003704+00:00"
+    }
+  ],
+  "source": "https://github.com/sickn33/agentic-awesome-skills/blob/e69f4f039234518ab86a41f71e6e99452c79bc7c/skills/browser-automation/SKILL.md",
+  "references": [
+    "https://github.com/vibeforge1111/vibeship-spawner-skills/tree/main/ai-agents/browser-automation"
+  ]
+}

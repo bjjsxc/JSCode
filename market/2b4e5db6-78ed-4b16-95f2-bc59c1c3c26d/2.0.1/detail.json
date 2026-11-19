@@ -1,0 +1,54 @@
+{
+  "id": "2b4e5db6-78ed-4b16-95f2-bc59c1c3c26d",
+  "name": "ci-cd-and-automation",
+  "title": "CI/CD 与自动化流水线",
+  "description": "自动化 CI/CD 流水线，通过质量门禁确保代码在到达生产环境前通过所有检查。支持 GitHub Actions、预览部署和分阶段发布。",
+  "summary": "赋予 Agent 搭建完整 CI/CD 流水线的能力。Agent 生成包含代码检查、单元测试、构建验证、安全审计和分阶段部署的 GitHub Actions workflow 配置，复制到项目即可使用。解决代码提交后缺少自动检查、部署流程手动操作易出错的痛点。源自社区 3.5 万+安装量。",
+  "category": "开发",
+  "tags": [
+    "CI/CD",
+    "GitHub Actions",
+    "质量门禁",
+    "预览部署",
+    "分阶段发布"
+  ],
+  "author": "Addy Osmani",
+  "version": "2.0.1",
+  "kind": "skill",
+  "updatedAt": "2026-09-21T09:47:19.549681+00:00",
+  "bytes": 5383,
+  "instructions": "---\nname: ci-cd-and-automation\ndescription: 自动化 CI/CD 流水线，通过质量门禁确保代码在到达生产环境前通过所有检查。支持 GitHub Actions、预览部署和分阶段发布。\n---\n\n# CI/CD 与自动化流水线\n\n自动化 CI/CD 流水线，通过质量门禁确保代码质量，推行\"左移\"策略尽早发现缺陷。\n\n## 触发场景\n\n- 搭建新项目的 CI/CD 流水线\n- 修改或调试自动化检查流程\n- 配置预览部署或分阶段发布\n- 设置依赖自动更新和安全审计\n\n## 质量门禁流水线\n\n按顺序执行以下检查步骤：\n\n1. **代码检查（Lint）**：代码风格和静态分析\n2. **类型检查**：TypeScript 类型验证\n3. **单元测试**：核心逻辑测试\n4. **构建**：编译和打包\n5. **集成测试**：模块间交互测试\n6. **E2E 测试**（可选）：端到端用户流程测试\n7. **安全审计**：依赖漏洞扫描\n8. **包体积检查**：防止包体积异常增长\n\n## GitHub Actions 配置\n\n### 基础 CI\n\n```yaml\nname: CI\non: [push, pull_request]\njobs:\n  quality-gate:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 20\n          cache: npm\n      - run: npm ci\n      - run: npm run lint\n      - run: npm run type-check\n      - run: npm test\n      - run: npm run build\n```\n\n### 数据库集成测试\n\n```yaml\n  integration:\n    needs: quality-gate\n    services:\n      postgres:\n        image: postgres:16\n        env:\n          POSTGRES_DB: test_db\n          POSTGRES_PASSWORD: test\n        ports: ['5432:5432']\n    steps:\n      - run: npm run test:integration\n```\n\n### E2E 测试（Playwright）\n\n```yaml\n  e2e:\n    needs: integration\n    steps:\n      - run: npx playwright install --with-deps\n      - run: npm run test:e2e\n```\n\n## 部署策略\n\n### 预览部署\n为每个 PR 创建独立的预览环境，方便代码审查时实时验证。\n\n### 特性开关\n使用特性开关控制新功能上线，支持灰度发布和快速回滚。\n\n### 分阶段发布\n- 第一阶段：内部测试环境（5% 流量）\n- 第二阶段：金丝雀发布（20% 流量）\n- 第三阶段：全面发布（100% 流量）\n\n## CI 优化技巧\n\n- 使用依赖缓存加速安装（`actions/cache`）\n- 并行执行独立测试任务\n- 增量测试：只运行受变更影响的测试\n- 使用 Dependabot 自动管理依赖更新\n- 设置\"构建值班\"角色处理 CI 失败\n\n## 回滚机制\n\n- 保留最近 5 个部署版本\n- 支持一键回滚到任意历史版本\n- 自动监控部署后错误率，超阈值触发告警\n",
+  "files": [
+    {
+      "path": "ci-cd-and-automation/SKILL.md",
+      "bytes": 2609
+    },
+    {
+      "path": "ci-cd-and-automation/templates/ci.yml",
+      "bytes": 3071
+    },
+    {
+      "path": "ci-cd-and-automation/templates/preview-deploy.yml",
+      "bytes": 2578
+    },
+    {
+      "path": "ci-cd-and-automation/UPSTREAM-NOTICE.txt",
+      "bytes": 208
+    },
+    {
+      "path": "ci-cd-and-automation/UPSTREAM-LICENSE.txt",
+      "bytes": 1068
+    }
+  ],
+  "sha256": "44a2ef543371a8f3f985c9c5d8551a543941c195972069fb9108745a4dfcc45b",
+  "changelog": "去除名称中的“（完整版）”后缀",
+  "compatibility": "",
+  "versions": [
+    {
+      "version": "2.0.1",
+      "changelog": "去除名称中的“（完整版）”后缀",
+      "published_at": "2026-09-21T09:47:19.549681+00:00"
+    }
+  ],
+  "source": "https://github.com/addyosmani/agent-skills/blob/fea75b16472ba87e8c11f13a9e000c3ffdb2d1f5/skills/ci-cd-and-automation/SKILL.md"
+}

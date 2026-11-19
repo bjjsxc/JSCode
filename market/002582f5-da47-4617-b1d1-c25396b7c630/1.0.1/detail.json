@@ -1,0 +1,52 @@
+{
+  "id": "002582f5-da47-4617-b1d1-c25396b7c630",
+  "name": "web-design-guidelines",
+  "title": "Web 设计规范审查",
+  "description": "审查 UI 代码是否符合 Web 界面设计规范。当用户要求\"审查我的 UI\"、\"检查无障碍\"、\"审计设计\"、\"检查 UX\"或\"对照最佳实践检查我的网站\"时使用。",
+  "summary": "赋予 Agent 审查 UI 代码是否符合 Web 设计规范的能力。Agent 从 Vercel 官方拉取最新规则，对指定文件进行无障碍、焦点管理、表单、动画、排版等 20+ 维度审查，输出 file:line 格式的问题清单。解决 UI 代码质量依赖人工审查、规范难以全面落地的痛点。源自社区 65 万+安装量，Vercel 官方出品。",
+  "category": "设计",
+  "tags": [
+    "UI审查",
+    "无障碍",
+    "设计系统",
+    "Vercel"
+  ],
+  "author": "Vercel Labs",
+  "version": "1.0.1",
+  "kind": "skill",
+  "updatedAt": "2026-09-21T11:13:05.753048+00:00",
+  "bytes": 6423,
+  "instructions": "---\nname: web-design-guidelines\ndescription: 审查 UI 代码是否符合 Web 界面设计规范。当用户要求\"审查我的 UI\"、\"检查无障碍\"、\"审计设计\"、\"检查 UX\"或\"对照最佳实践检查我的网站\"时使用。\nmetadata:\n  author: vercel\n  version: \"1.0.1\"\n  argument-hint: <文件或路径>\n---\n\n# Web 界面设计规范\n\n审查文件是否符合 Web 界面设计规范。\n\n## 工作流程\n\n1. 从下方源地址获取最新规范\n2. 读取指定文件（或提示用户输入文件/路径）\n3. 对照规范中的所有规则进行检查\n4. 以简洁的 `文件:行号` 格式输出问题\n\n## 规范源地址\n\n每次审查前获取最新规范：\n\n```\nhttps://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md\n```\n\n使用 WebFetch 获取最新规则。获取的内容包含所有规则和输出格式说明。\n\n## 使用方法\n\n当用户提供文件或路径参数时：\n1. 从上方源地址获取规范\n2. 读取指定文件\n3. 应用获取到的规范中的所有规则\n4. 按照规范中指定的格式输出问题\n\n如果未指定文件，询问用户要审查哪些文件。\n",
+  "files": [
+    {
+      "path": "web-design-guidelines/SKILL.md",
+      "bytes": 1137
+    },
+    {
+      "path": "web-design-guidelines/rules/web-interface-guidelines.md",
+      "bytes": 7721
+    },
+    {
+      "path": "web-design-guidelines/UPSTREAM-NOTICE.txt",
+      "bytes": 266
+    },
+    {
+      "path": "web-design-guidelines/UPSTREAM-LICENSE.txt",
+      "bytes": 1068
+    }
+  ],
+  "sha256": "ae2445b275b67941b75f19657226a67b4e30aacc7466dca89140c749af952c37",
+  "changelog": "完整汉化：SKILL.md 和审查规则文件全部翻译为中文，包括无障碍、焦点状态、表单、动画、排版、性能等 20+ 维度的规则说明和输出示例。",
+  "compatibility": "",
+  "versions": [
+    {
+      "version": "1.0.1",
+      "changelog": "完整汉化：SKILL.md 和审查规则文件全部翻译为中文，包括无障碍、焦点状态、表单、动画、排版、性能等 20+ 维度的规则说明和输出示例。",
+      "published_at": "2026-09-21T11:13:05.753048+00:00"
+    }
+  ],
+  "source": "https://github.com/vercel-labs/agent-skills/blob/ba46938889d4e58635362fb8f618e1178ac3ec46/skills/web-design-guidelines/SKILL.md",
+  "references": [
+    "https://github.com/vercel-labs/web-interface-guidelines"
+  ]
+}

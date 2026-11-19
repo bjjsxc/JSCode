@@ -1,0 +1,54 @@
+{
+  "id": "8c888600-b15d-4f5b-a4b8-ec9b3c612b91",
+  "name": "webapp-testing",
+  "title": "Web 应用自动化测试",
+  "description": "使用原生 Python Playwright 脚本测试本地 Web 应用，支持服务器生命周期管理、动态内容识别和自动化操作。",
+  "summary": "赋予 Agent 自动执行 Web 应用端到端测试的能力。Agent 先截图识别页面元素，再生成并执行 Playwright 测试脚本，支持多服务器并行启动和自动清理。解决手动测试重复繁琐、自动化脚本维护成本高的痛点。源自社区 16 万+安装量。",
+  "category": "开发",
+  "tags": [
+    "Playwright",
+    "自动化测试",
+    "E2E",
+    "Web测试",
+    "服务器管理"
+  ],
+  "author": "Anthropic",
+  "version": "2.0.1",
+  "kind": "skill",
+  "updatedAt": "2026-09-21T09:48:24.235322+00:00",
+  "bytes": 8272,
+  "instructions": "---\nname: webapp-testing\ndescription: 使用原生 Python Playwright 脚本测试本地 Web 应用，支持服务器生命周期管理、动态内容识别和自动化操作。\n---\n\n# Web 应用自动化测试\n\n使用原生 Python Playwright 脚本对本地 Web 应用进行端到端测试，内置服务器生命周期管理。\n\n## 触发场景\n\n- 需要对本地运行的 Web 应用进行自动化测试\n- 需要验证 UI 交互流程和页面状态\n- 需要捕获控制台日志和页面截图\n- 需要管理测试服务器的启动和关闭\n\n## 核心工作流\n\n### 1. 服务器管理\n\n使用 `scripts/with_server.py` 辅助脚本管理测试服务器：\n\n```bash\n# 启动单个服务器\npython scripts/with_server.py --server \"npm run dev\" --port 5173 -- python your_automation.py\n\n# 启动多个服务器\npython scripts/with_server.py --server \"npm run api\" --port 3000 --server \"npm run dev\" --port 5173 -- python your_automation.py\n```\n\n始终先运行 `--help` 查看可用选项。将这些脚本视为黑盒使用，无需将其源码载入上下文。\n\n### 2. 侦察-再行动工作流\n\n对于动态 Web 应用，遵循以下步骤：\n\n1. **导航**：打开目标页面\n2. **等待**：等待 `networkidle` 状态，防止时序错误\n3. **侦察**：截图或检查 DOM，识别选择器\n4. **行动**：执行自动化操作\n\n### 3. 静态 HTML 处理\n\n如果应用是静态 HTML，直接读取 HTML 文件查找选择器，无需启动服务器。\n\n## 关键原则\n\n- 始终等待 `networkidle` 后再检查页面状态\n- 优先使用语义化选择器（role、label）而非 CSS/XPath\n- 对动态内容使用显式等待而非硬编码延迟\n- 测试结束后清理服务器进程\n\n## 示例\n\n```python\nfrom playwright.sync_api import sync_playwright\n\nwith sync_playwright() as p:\n    browser = p.chromium.launch()\n    page = browser.new_page()\n    page.goto(\"http://localhost:5173\")\n    page.wait_for_load_state(\"networkidle\")\n    # 截图侦察\n    page.screenshot(path=\"initial.png\")\n    # 执行操作\n    page.click(\"button:has-text('提交')\")\n    page.wait_for_load_state(\"networkidle\")\n    browser.close()\n```\n",
+  "files": [
+    {
+      "path": "webapp-testing/SKILL.md",
+      "bytes": 2136
+    },
+    {
+      "path": "webapp-testing/examples/login_test.py",
+      "bytes": 1460
+    },
+    {
+      "path": "webapp-testing/scripts/with_server.py",
+      "bytes": 3579
+    },
+    {
+      "path": "webapp-testing/UPSTREAM-NOTICE.txt",
+      "bytes": 194
+    },
+    {
+      "path": "webapp-testing/UPSTREAM-LICENSE.txt",
+      "bytes": 11357
+    }
+  ],
+  "sha256": "f2df30a3b9a44e192d906adcc498f4e9dc117263ccf3a0e4f6c266bf239831cc",
+  "changelog": "去除名称中的“（完整版）”后缀",
+  "compatibility": "",
+  "versions": [
+    {
+      "version": "2.0.1",
+      "changelog": "去除名称中的“（完整版）”后缀",
+      "published_at": "2026-09-21T09:48:24.235322+00:00"
+    }
+  ],
+  "source": "https://github.com/anthropics/skills/blob/ef740771ac901e03fbca3ce4e1c453a96010f30a/skills/webapp-testing/SKILL.md"
+}
